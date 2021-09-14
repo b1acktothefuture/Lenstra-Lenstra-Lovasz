@@ -65,43 +65,43 @@ void MatrixIp(matrix &ret)
 {
     ret.clear();
     int n, m;
-    cout << "Enter nrows: ";
-    cin >> n;
-    cout << "Enter ncols: ";
-    cin >> m;
+    std::cout << "Enter nrows: ";
+    std::cin >> n;
+    std::cout << "Enter ncols: ";
+    std::cin >> m;
     integer x;
     for (int i = 0; i < m; i++)
     {
         ret.push_back(Qn(n));
         for (int j = 0; j < n; j++)
         {
-            cout << "Enter element [" << j << "," << i << "]: ";
-            cin >> x;
+            std::cout << "Enter element [" << j << "," << i << "]: ";
+            std::cin >> x;
             ret[i].v[j] = fraction(x);
         }
     }
 }
 
-void MatrixOp(matrix &ret, string s, int k)
+void MatrixOp(matrix &ret, std::string s, int k)
 {
     int n = ret[0].n, m = ret.size();
     if (s != "")
-        cout << s << endl;
+        std::cout << s << std::endl;
     integer x;
-    cout << "[\n";
+    std::cout << "[\n";
     for (int i = 0; i < n; i++)
     {
-        cout << "[ ";
+        std::cout << "[ ";
         for (int j = 0; j < m; j++)
         {
             if (k == 1)
-                cout << ret[j].v[i] << " ";
+                std::cout << ret[j].v[i] << " ";
             else
-                cout << ret[j].v[i].numerator() << " ";
+                std::cout << ret[j].v[i].numerator() << " ";
         }
-        cout << "]\n";
+        std::cout << "]\n";
     }
-    cout << "]\n";
+    std::cout << "]\n";
 }
 
 /****************************** LLL **********************************/
@@ -145,9 +145,9 @@ void lll(matrix &basis, fraction delta)
             k += 1;
         else
         {
-            swap(basis[k], basis[k - 1]);
+            std::swap(basis[k], basis[k - 1]);
             GramSchmidt(basis, mu, red);
-            k = max(k - 1, 1);
+            k = std::max(k - 1, 1);
         }
     }
 }
