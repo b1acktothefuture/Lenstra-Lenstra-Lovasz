@@ -16,7 +16,7 @@ MatrixIp(basis); // taking basis for lattice as input
 lll(basis,delta);  // delta: 𝛿 in Lovasz condition, default 0.75
 // basis matrix is modified to store the reduced basis
 
-MatrixOp(basis); // ptint reduced basis to cout
+MatrixOp(basis); // print reduced basis to cout
 .....
 ```
 ### Compile
