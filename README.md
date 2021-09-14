@@ -24,7 +24,7 @@ MatrixOp(basis); // print reduced basis to cout
 g++ foo.cpp lll.cpp -lgmp
 ```
 
-## Referances
+## References
 * https://web.eecs.umich.edu/~cpeikert/lic15/lec03.pdf
 * https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm
 
