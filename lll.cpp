@@ -50,17 +50,6 @@ void init(matrix &x, int n, int m)
         x.push_back(Qn(n));
 }
 
-void swap(matrix &m, int k)
-{
-    fraction x;
-    for (int i = 0; i < m[k].n; i++)
-    {
-        x = m[k].v[i];
-        m[k].v[i] = m[k - 1].v[i];
-        m[k - 1].v[i] = x;
-    }
-}
-
 void MatrixIp(matrix &ret)
 {
     ret.clear();

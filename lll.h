@@ -43,7 +43,6 @@ Qn operator*(fraction f, Qn &u);
 fraction dot(Qn &v, Qn &u);
 
 void init(matrix &x, int n, int m);
-void swap(matrix &m, int k);
 void MatrixIp(matrix &ret);
 void MatrixOp(matrix &ret, std::string s = "", int k = 0);
 
