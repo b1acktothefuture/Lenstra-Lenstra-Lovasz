@@ -1,13 +1,12 @@
 #include <boost/rational.hpp>
 #include <iostream>
 #include <vector>
-#include <NTL/ZZ.h>
+#include <boost/multiprecision/gmp.hpp>
 
 using namespace std;
-using namespace NTL;
 
 class Qn;
-typedef NTL::ZZ integer;
+typedef boost::multiprecision::mpz_int integer;
 typedef boost::rational<integer> fraction;
 typedef vector<Qn> matrix;
 
@@ -77,7 +76,7 @@ Qn operator*(fraction f, Qn &u)
 
 fraction dot(Qn &v, Qn &u)
 {
-    fraction r(integer(0));
+    fraction r(0);
     assert(v.n == u.n && v.n != 0);
     for (int i = 0; i < v.n; i++)
         r += v.v[i] * u.v[i];
@@ -182,8 +181,6 @@ void lll(matrix &basis, fraction delta)
                 GramSchmidt(basis, mu, red);
             }
         }
-        MatrixOp(basis, "", 1);
-        MatrixOp(mu, "", 1);
 
         if (red[k].normSqr() >= (delta - (mu[k].v[k - 1] * mu[k].v[k - 1])) * (red[k - 1].normSqr()))
             k += 1;
@@ -193,9 +190,8 @@ void lll(matrix &basis, fraction delta)
             GramSchmidt(basis, mu, red);
             k = max(k - 1, 1);
         }
-
-    } // 40/9 >= (0.75 )*5
-    // MatrixOp(basis, "", 1);
+    }
+    MatrixOp(basis, "Reduced Basis");
 }
 
 int main()
@@ -222,7 +218,6 @@ int main()
     t.v[2] = integer(732);
     t.v[3] = integer(441);
     x.push_back(t);
-    MatrixOp(x);
     lll(x, fraction(integer(3), integer(4)));
 }
 
