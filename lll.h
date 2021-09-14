@@ -33,20 +33,8 @@ public:
 
     ~Qn() { delete[](v); }
 
-    void operator-=(const Qn &u)
-    {
-        assert(n == u.n && n != 0);
-        for (int i = 0; i < n; i++)
-            v[i] -= u.v[i];
-    }
-
-    void operator=(const Qn &u)
-    {
-        assert(n == u.n && n != 0);
-        for (int i = 0; i < n; i++)
-            v[i] = u.v[i];
-    }
-
+    void operator-=(const Qn &u);
+    void operator=(const Qn &u);
     friend fraction dot(Qn &v, Qn &u);
     fraction normSqr() { return dot(*this, *this); }
 };

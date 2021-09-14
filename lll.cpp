@@ -27,6 +27,20 @@ fraction dot(Qn &v, Qn &u)
     return r;
 }
 
+void Qn ::operator-=(const Qn &u)
+{
+    assert(n == u.n && n != 0);
+    for (int i = 0; i < n; i++)
+        v[i] -= u.v[i];
+}
+
+void Qn::operator=(const Qn &u)
+{
+    assert(n == u.n && n != 0);
+    for (int i = 0; i < n; i++)
+        v[i] = u.v[i];
+}
+
 /****************************** MATRIX **********************************/
 
 void init(matrix &x, int n, int m)
@@ -73,9 +87,6 @@ void MatrixOp(matrix &ret, string s, int k)
     int n = ret[0].n, m = ret.size();
     if (s != "")
         cout << s << endl;
-    cout
-        << "nrows: " << ret[0].n << endl;
-    cout << "ncols: " << ret.size() << endl;
     integer x;
     cout << "[\n";
     for (int i = 0; i < n; i++)
