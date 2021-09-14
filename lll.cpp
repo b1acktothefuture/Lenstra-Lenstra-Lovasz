@@ -41,6 +41,20 @@ void Qn::operator=(const Qn &u)
         v[i] = u.v[i];
 }
 
+void QnIP(Qn &v, int n)
+{
+    integer t;
+    int i = 0;
+    while (true)
+    {
+        std::cin >> t;
+        v.v[i] = t;
+        i++;
+        if (std::cin.peek() == '\n' || i == n)
+            break;
+    }
+}
+
 /****************************** MATRIX **********************************/
 
 void init(matrix &x, int n, int m)
@@ -54,20 +68,15 @@ void MatrixIp(matrix &ret)
 {
     ret.clear();
     int n, m;
-    std::cout << "Enter nrows: ";
-    std::cin >> n;
-    std::cout << "Enter ncols: ";
-    std::cin >> m;
+    std::cout << "Enter nrows and ncols: ";
+    std::cin >> n >> m;
     integer x;
+    Qn t(n);
     for (int i = 0; i < m; i++)
     {
-        ret.push_back(Qn(n));
-        for (int j = 0; j < n; j++)
-        {
-            std::cout << "Enter element [" << j << "," << i << "]: ";
-            std::cin >> x;
-            ret[i].v[j] = fraction(x);
-        }
+        std::cout << "Enter vector " << i + 1 << " : ";
+        QnIP(t, n);
+        ret.push_back(t);
     }
 }
 

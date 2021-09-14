@@ -3,8 +3,6 @@
 #include <vector>
 #include <boost/multiprecision/gmp.hpp>
 
-// using namespace std;
-
 class Qn;
 typedef boost::multiprecision::mpz_int integer;
 typedef boost::rational<integer> fraction;
@@ -48,3 +46,5 @@ void MatrixOp(matrix &ret, std::string s = "", int k = 0);
 
 void GramSchmidt(matrix &B, matrix &mu, matrix &red);
 void lll(matrix &basis, fraction delta);
+
+void QnIP(Qn &v, int n);
