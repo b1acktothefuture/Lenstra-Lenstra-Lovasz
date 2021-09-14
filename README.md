@@ -1,8 +1,7 @@
 # LLL++
 ## C++ implementaion of LLL basis reduciton algorithm
-<br>
 
-# Dependencies
+## Dependencies
 * Boost : https://www.boost.org/
 * GMP : https://gmplib.org/
 
