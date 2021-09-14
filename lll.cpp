@@ -1,0 +1,142 @@
+#include "lll.h"
+namespace boost
+{
+    template <typename IntType>
+    constexpr IntType round(rational<IntType> const &r)
+    {
+        return static_cast<IntType>((r.numerator() * 2 + r.denominator()) / (r.denominator() * 2));
+    }
+}
+
+/****************************** Qn **********************************/
+
+Qn operator*(fraction f, Qn &u)
+{
+    Qn v(u);
+    for (int i = 0; i < u.n; i++)
+        v.v[i] *= f;
+    return v;
+}
+
+fraction dot(Qn &v, Qn &u)
+{
+    fraction r(0);
+    assert(v.n == u.n && v.n != 0);
+    for (int i = 0; i < v.n; i++)
+        r += v.v[i] * u.v[i];
+    return r;
+}
+
+/****************************** MATRIX **********************************/
+
+void init(matrix &x, int n, int m)
+{
+    assert(x.size() == 0);
+    for (int i = 0; i < m; i++)
+        x.push_back(Qn(n));
+}
+
+void swap(matrix &m, int k)
+{
+    fraction x;
+    for (int i = 0; i < m[k].n; i++)
+    {
+        x = m[k].v[i];
+        m[k].v[i] = m[k - 1].v[i];
+        m[k - 1].v[i] = x;
+    }
+}
+
+void MatrixIp(matrix &ret)
+{
+    ret.clear();
+    int n, m;
+    cout << "Enter nrows: ";
+    cin >> n;
+    cout << "Enter ncols: ";
+    cin >> m;
+    integer x;
+    for (int i = 0; i < m; i++)
+    {
+        ret.push_back(Qn(n));
+        for (int j = 0; j < n; j++)
+        {
+            cout << "Enter element [" << j << "," << i << "]: ";
+            cin >> x;
+            ret[i].v[j] = fraction(x);
+        }
+    }
+}
+
+void MatrixOp(matrix &ret, string s, int k)
+{
+    int n = ret[0].n, m = ret.size();
+    if (s != "")
+        cout << s << endl;
+    cout
+        << "nrows: " << ret[0].n << endl;
+    cout << "ncols: " << ret.size() << endl;
+    integer x;
+    cout << "[\n";
+    for (int i = 0; i < n; i++)
+    {
+        cout << "[ ";
+        for (int j = 0; j < m; j++)
+        {
+            if (k == 1)
+                cout << ret[j].v[i] << " ";
+            else
+                cout << ret[j].v[i].numerator() << " ";
+        }
+        cout << "]\n";
+    }
+    cout << "]\n";
+}
+
+/****************************** LLL **********************************/
+
+void GramSchmidt(matrix &B, matrix &mu, matrix &red) // returns B' : GS orthogonal basis
+{
+    int n = B.size();
+    for (int i = 0; i < n; i++)
+    {
+        red[i] = (B[i]);
+        mu[i].v[i] = fraction(integer(1));
+        for (int j = 0; j < i; j++)
+        {
+            mu[i].v[j] = dot(B[i], red[j]) / red[j].normSqr();
+            red[i] -= (mu[i].v[j] * red[j]);
+        }
+    }
+}
+
+void lll(matrix &basis, fraction delta)
+{
+    matrix mu, red;
+    int n = basis.size(), k = 1;
+    init(mu, n, n);
+    init(red, n, n);
+    GramSchmidt(basis, mu, red);
+
+    while (k < n)
+    {
+
+        for (int j = k - 1; j >= 0; j--)
+        {
+            if (boost::round(mu[k].v[j]) != 0)
+            {
+                basis[k] -= fraction(boost::round(mu[k].v[j])) * basis[j];
+                GramSchmidt(basis, mu, red);
+            }
+        }
+
+        if (red[k].normSqr() >= (delta - (mu[k].v[k - 1] * mu[k].v[k - 1])) * (red[k - 1].normSqr()))
+            k += 1;
+        else
+        {
+            swap(basis[k], basis[k - 1]);
+            GramSchmidt(basis, mu, red);
+            k = max(k - 1, 1);
+        }
+    }
+}
