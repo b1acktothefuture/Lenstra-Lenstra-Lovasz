@@ -76,7 +76,7 @@ void MatrixIp(matrix &ret)
     Qn t(n);
     for (int i = 0; i < m; i++)
     {
-        std::cout << "Enter vector " << i + 1 << " : ";
+        std::cout << "Enter Basis " << i + 1 << " : ";
         QnIp(t, n);
         ret.push_back(t);
     }
@@ -134,24 +134,16 @@ void lll(matrix &basis, fraction delta)
         for (int j = k - 1; j >= 0; j--)
             if (boost::round(mu[k].v[j]) != 0)
             {
-                // std::cout << k << " Uppers " << mu[k].v[j] << " " << boost::round(mu[k].v[j]) << std::endl;
                 basis[k] -= fraction(boost::round(mu[k].v[j])) * basis[j];
                 GramSchmidt(basis, mu, red);
             }
         if (red[k].normSqr() >= (delta - (mu[k].v[k - 1] * mu[k].v[k - 1])) * (red[k - 1].normSqr()))
-        {
             k += 1;
-            // std::cout << k << "Up" << std::endl;
-            // MatrixOp(basis);
-        }
         else
         {
-            // std::cout << k << std::endl;
-            // MatrixOp(basis);
             std::swap(basis[k], basis[k - 1]);
             GramSchmidt(basis, mu, red);
             k = std::max(k - 1, 1);
-            // MatrixOp(basis);
         }
     }
 }
