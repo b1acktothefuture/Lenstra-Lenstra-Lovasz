@@ -4,10 +4,12 @@ namespace boost
     template <typename IntType>
     constexpr IntType round(rational<IntType> const &r)
     {
-        return static_cast<IntType>((r.numerator() * 2 + r.denominator()) / (r.denominator() * 2));
+        if (r.numerator() > 0)
+            return static_cast<IntType>((r.numerator() * 2 + r.denominator()) / (r.denominator() * 2));
+
+        return static_cast<IntType>(-1 * ((r.numerator() * -2 + r.denominator()) / (r.denominator() * 2)));
     }
 }
-
 /****************************** Qn **********************************/
 
 Qn operator*(fraction f, Qn &u)
@@ -129,23 +131,27 @@ void lll(matrix &basis, fraction delta)
 
     while (k < n)
     {
-
         for (int j = k - 1; j >= 0; j--)
-        {
             if (boost::round(mu[k].v[j]) != 0)
             {
+                // std::cout << k << " Uppers " << mu[k].v[j] << " " << boost::round(mu[k].v[j]) << std::endl;
                 basis[k] -= fraction(boost::round(mu[k].v[j])) * basis[j];
                 GramSchmidt(basis, mu, red);
             }
-        }
-
         if (red[k].normSqr() >= (delta - (mu[k].v[k - 1] * mu[k].v[k - 1])) * (red[k - 1].normSqr()))
+        {
             k += 1;
+            // std::cout << k << "Up" << std::endl;
+            // MatrixOp(basis);
+        }
         else
         {
+            // std::cout << k << std::endl;
+            // MatrixOp(basis);
             std::swap(basis[k], basis[k - 1]);
             GramSchmidt(basis, mu, red);
             k = std::max(k - 1, 1);
+            // MatrixOp(basis);
         }
     }
 }
