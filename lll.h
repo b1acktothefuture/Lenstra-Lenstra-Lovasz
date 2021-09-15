@@ -47,4 +47,4 @@ void MatrixOp(matrix &ret, std::string s = "", int k = 0);
 void GramSchmidt(matrix &B, matrix &mu, matrix &red);
 void lll(matrix &basis, fraction delta);
 
-void QnIP(Qn &v, int n);
+void QnIp(Qn &v, int n);

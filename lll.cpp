@@ -1,4 +1,5 @@
 #include "lll.h"
+
 namespace boost
 {
     template <typename IntType>
@@ -6,7 +7,6 @@ namespace boost
     {
         if (r.numerator() > 0)
             return static_cast<IntType>((r.numerator() * 2 + r.denominator()) / (r.denominator() * 2));
-
         return static_cast<IntType>(-1 * ((r.numerator() * -2 + r.denominator()) / (r.denominator() * 2)));
     }
 }
@@ -43,7 +43,7 @@ void Qn::operator=(const Qn &u)
         v[i] = u.v[i];
 }
 
-void QnIP(Qn &v, int n)
+void QnIp(Qn &v, int n)
 {
     integer t;
     int i = 0;
@@ -77,7 +77,7 @@ void MatrixIp(matrix &ret)
     for (int i = 0; i < m; i++)
     {
         std::cout << "Enter vector " << i + 1 << " : ";
-        QnIP(t, n);
+        QnIp(t, n);
         ret.push_back(t);
     }
 }
