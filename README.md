@@ -1,5 +1,5 @@
 # LLL++
-## C++ implementaion of LLL basis reduciton algorithm
+## C++ implementaion of LLL basis reduction algorithm
 
 ## Dependencies
 * Boost : https://www.boost.org/
