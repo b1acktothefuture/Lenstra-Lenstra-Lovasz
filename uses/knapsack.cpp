@@ -6,8 +6,6 @@ density = n / log2 ( max (arr) )
 density condition max(arr) >= 2**(n*n/2 + epsilon), hence acceptable value < 2/n 
 */
 
-
-
 bool checkDensity(integer n, integer X){
     fraction t(n*n,2);
     fraction x(0);
@@ -90,14 +88,25 @@ integer lowDensityKnapsack(Zn arr,integer sum,bool flip = 0){
     // Basis Reduction using LLL, delta = 0.75
     // std::cout << "Reducing Lattice Basis...\n";
     lll(basis,fraction(3,4)); 
-
     return checkSolution(basis,arr,sum,flip);
 }
 
 
+char* binary(integer x,int size){
+    char* ret = new char[size];
+    int i = 0;
+    while(i != size){
+        ret[i] = char(x&1);
+        x = x/2;
+        i++;
+    }
+    return ret;
+}
+
 
 
 int main(){
+    
     std::cout << "Enter n (number of elements): ";
     int x;
     std::cin>> x;
@@ -108,5 +117,7 @@ int main(){
         v.push_back(t);
     }
 
-    std::cout<<lowDensityKnapsack(v,v[1]+v[2]+v[3])<<std::endl;
+    char* ret = binary(lowDensityKnapsack(v,v[0]+v[2]),x); // testing with 2 elements
+    for(int i = 0;i<x;i++) std::cout << int(ret[i]) << " ";
+    std::cout << "\n";
 }
